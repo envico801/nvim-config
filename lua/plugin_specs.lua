@@ -142,6 +142,7 @@ local plugin_specs = {
   { "sainnhe/edge", lazy = true },
   { "sainnhe/sonokai", lazy = true },
   { "sainnhe/gruvbox-material", lazy = true },
+  { "folke/tokyonight.nvim", name = "tokyonight", lazy = true },
   { "sainnhe/everforest", lazy = true },
   { "EdenEast/nightfox.nvim", lazy = true },
   { "catppuccin/nvim", name = "catppuccin", lazy = true },
