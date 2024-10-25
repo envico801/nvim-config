@@ -39,14 +39,31 @@ local plugin_specs = {
       require("config.nvim-cmp")
     end,
   },
+  -- LSP Support
   {
     "neovim/nvim-lspconfig",
     event = { "BufRead", "BufNewFile" },
+    dependencies = {
+      -- Mason and mason-lspconfig must be dependencies of lspconfig
+      {
+        "williamboman/mason.nvim",
+        cmd = "Mason",
+        build = ":MasonUpdate",
+        config = function()
+          require("config.nvim-mason")
+        end,
+      },
+      {
+        "williamboman/mason-lspconfig.nvim",
+        config = function()
+          require("config.nvim-mason-lspconfig")
+        end,
+      },
+    },
     config = function()
       require("config.lsp")
     end,
   },
-
   {
     "nvim-treesitter/nvim-treesitter",
     enabled = function()
