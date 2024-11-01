@@ -43,6 +43,14 @@ require("bufferline").setup {
     always_show_bufferline = true,
     sort_by = "id",
   },
+  highlights = {
+    buffer_selected = {
+      fg = '#ffffff',
+    },
+    tab_selected = {
+      fg = '#fb4934',
+    },
+  }
 }
 
 vim.keymap.set("n", "<space>bp", "<cmd>BufferLinePick<CR>", {
