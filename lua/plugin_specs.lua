@@ -541,9 +541,6 @@ local plugin_specs = {
     end,
   },
 
-  -- Better git commit experience
-  { "rhysd/committia.vim", lazy = true },
-
   {
     "sindrets/diffview.nvim",
   },
