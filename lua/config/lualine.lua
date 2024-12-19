@@ -182,8 +182,8 @@ require("lualine").setup {
         source = diff,
       },
       {
-        ime_state,
-        color = { fg = "black", bg = "#f46868" },
+        "%S",
+        color = { gui = "bold", fg = "cyan" },
       },
       {
         spell,
@@ -193,6 +193,7 @@ require("lualine").setup {
     lualine_x = {
       {
         get_patterns,
+        ime_state,
         color = { fg = "black", bg = "#c7241d" },
       },
       {
