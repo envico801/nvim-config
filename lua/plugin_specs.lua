@@ -130,6 +130,22 @@ local plugin_specs = {
         vim.cmd("LeaderfInstallCExtension")
       end
     end,
+    "ThePrimeagen/harpoon",
+    -- event = "BufReadPost",
+    keys = {
+      { "<leader>a", "<cmd>lua require('harpoon.mark').add_file()<cr>", desc = "Harpoon add file" },
+      { "<leader>ee", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", desc = "Harpoon toggle menu" },
+      { "<C-j>", "<cmd>lua require('harpoon.ui').nav_file(1)<cr>", desc = "Harpoon file 1" },
+      { "<C-k>", "<cmd>lua require('harpoon.ui').nav_file(2)<cr>", desc = "Harpoon file 2" },
+      { "<C-l>", "<cmd>lua require('harpoon.ui').nav_file(3)<cr>", desc = "Harpoon file 3" },
+      { "<C-h>", "<cmd>lua require('harpoon.ui').nav_file(4)<cr>", desc = "Harpoon file 4" },
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function ()
+      require("config.harpoon")
+    end
   },
   "nvim-lua/plenary.nvim",
   {
