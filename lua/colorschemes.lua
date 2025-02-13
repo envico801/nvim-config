@@ -32,6 +32,9 @@ M.colorscheme_conf = {
     vim.g.gruvbox_material_transparent_background = 1
 
     vim.cmd([[colorscheme gruvbox-material]])
+
+    -- Set unfocused window background
+    -- vim.api.nvim_set_hl(0, 'NormalNC', {fg = "#504945", bg = '#504945' })
   end,
   -- everforest = function()
   --   vim.g.everforest_enable_italic = 1

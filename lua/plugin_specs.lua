@@ -206,6 +206,12 @@ local plugin_specs = {
     --     vim.g.VM_default_mappings = true
     -- end
   },
+  -- {
+  --   "edkolev/tmuxline.vim",
+  --   config = function ()
+  --     require('config.tmuxline')
+  --   end
+  -- },
   },
   -- {
   --   "ibhagwan/fzf-lua",
