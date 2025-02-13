@@ -312,8 +312,12 @@ local plugin_specs = {
   {
     "MeanderingProgrammer/markdown.nvim",
     main = "render-markdown",
+    ft = { "markdown" },
     opts = {},
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+    config = function ()
+      require('config.markdown-nvim')
+    end
   },
   -- A list of colorscheme plugin you may want to try. Find what suits you.
   -- { "navarasu/onedark.nvim", lazy = true },
