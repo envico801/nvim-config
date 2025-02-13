@@ -676,7 +676,8 @@ local plugin_specs = {
   {
     "j-hui/fidget.nvim",
     event = "VeryLazy",
-    tag = "legacy",
+    tag = "v1.4.5",
+    -- tag = "legacy",
     config = function()
       require("config.fidget-nvim")
     end,
