@@ -2,7 +2,18 @@ local keymap = vim.keymap
 local uv = vim.uv
 
 -- Save key strokes (now we do not need to press shift to enter command mode).
-keymap.set({ "n", "x" }, ";", ":")
+-- keymap.set({ "n", "x" }, ";", ":")
+
+keymap.set("n", "e", "")
+-- Allows me to use comma instead of leader f/F keys
+keymap.set("n", "'", ",")
+-- Allows you to look to only one point when scrolling
+keymap.set("n", "<c-d>", "<c-d>zz")
+keymap.set("n", "<c-u>", "<c-u>zz")
+
+keymap.set("x", "<leader>p", "\"_dP", { desc = "paste current clipboard and keep it" })
+
+keymap.set("x", "K", "")
 
 -- Turn the word under cursor to upper case
 keymap.set("i", "<c-u>", "<Esc>viwUea")
@@ -11,8 +22,8 @@ keymap.set("i", "<c-u>", "<Esc>viwUea")
 keymap.set("i", "<c-t>", "<Esc>b~lea")
 
 -- Paste non-linewise text above or below current line, see https://stackoverflow.com/a/1346777/6064933
-keymap.set("n", "<leader>p", "m`o<ESC>p``", { desc = "paste below current line" })
-keymap.set("n", "<leader>P", "m`O<ESC>p``", { desc = "paste above current line" })
+-- keymap.set("n", "<leader>p", "m`o<ESC>p``", { desc = "paste below current line" })
+-- keymap.set("n", "<leader>P", "m`O<ESC>p``", { desc = "paste above current line" })
 
 -- Shortcut for faster save and quit
 keymap.set("n", "<leader>w", "<cmd>update<cr>", { silent = true, desc = "save buffer" })
@@ -117,7 +128,7 @@ keymap.set("n", "<leader>v", "printf('`[%s`]', getregtype()[0])", {
 })
 
 -- Always use very magic mode for searching
-keymap.set("n", "/", [[/\v]])
+-- keymap.set("n", "/", [[/\v]])
 
 -- Search in selected region
 -- xnoremap / :<C-U>call feedkeys('/\%>'.(line("'<")-1).'l\%<'.(line("'>")+1)."l")<CR>
@@ -174,10 +185,10 @@ keymap.set("n", "gB", '<cmd>call buf_utils#GoToBuffer(v:count, "backward")<cr>',
 })
 
 -- Switch windows
-keymap.set("n", "<left>", "<c-w>h")
-keymap.set("n", "<Right>", "<C-W>l")
-keymap.set("n", "<Up>", "<C-W>k")
-keymap.set("n", "<Down>", "<C-W>j")
+-- keymap.set("n", "<left>", "<c-w>h")
+-- keymap.set("n", "<Right>", "<C-W>l")
+-- keymap.set("n", "<Up>", "<C-W>k")
+-- keymap.set("n", "<Down>", "<C-W>j")
 
 -- Text objects for URL
 keymap.set({ "x", "o" }, "iu", "<cmd>call text_obj#URL()<cr>", { desc = "URL text object" })

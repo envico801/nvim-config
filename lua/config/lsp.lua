@@ -1,4 +1,3 @@
-local fn = vim.fn
 local api = vim.api
 local keymap = vim.keymap
 local lsp = vim.lsp
@@ -32,7 +31,7 @@ function M.custom_attach(client, bufnr)
   map("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
   map("n", "<C-]>", vim.lsp.buf.definition)
   map("n", "K", vim.lsp.buf.hover)
-  map("n", "<C-k>", vim.lsp.buf.signature_help)
+  map("n", "<C-o>", vim.lsp.buf.signature_help)
   map("n", "<space>rn", vim.lsp.buf.rename, { desc = "varialbe rename" })
   map("n", "gr", vim.lsp.buf.references, { desc = "show references" })
   map("n", "[d", diagnostic.goto_prev, { desc = "previous diagnostic" })

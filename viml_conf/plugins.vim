@@ -76,22 +76,22 @@ let g:Lf_ShortcutB = ''
 let g:Lf_WorkingDirectoryMode = 'a'
 
 " Search files in popup window
-nnoremap <silent> <leader>ff :<C-U>Leaderf file --popup<CR>
+" nnoremap <silent> <leader>ff :<C-U>Leaderf file --popup<CR>
 
 " Grep project files in popup window
-nnoremap <silent> <leader>fg :<C-U>Leaderf rg --no-messages --popup<CR>
+" nnoremap <silent> <leader>fg :<C-U>Leaderf rg --no-messages --popup<CR>
 
 " Search vim help files
-nnoremap <silent> <leader>fh :<C-U>Leaderf help --popup<CR>
+" nnoremap <silent> <leader>fh :<C-U>Leaderf help --popup<CR>
 
 " Search tags in current buffer
-nnoremap <silent> <leader>ft :<C-U>Leaderf bufTag --popup<CR>
+" nnoremap <silent> <leader>ft :<C-U>Leaderf bufTag --popup<CR>
 
 " Switch buffers
-nnoremap <silent> <leader>fb :<C-U>Leaderf buffer --popup<CR>
+" nnoremap <silent> <leader>fb :<C-U>Leaderf buffer --popup<CR>
 
 " Search recent files
-nnoremap <silent> <leader>fr :<C-U>Leaderf mru --popup --absolute-path<CR>
+" nnoremap <silent> <leader>fr :<C-U>Leaderf mru --popup --absolute-path<CR>
 
 let g:Lf_PopupColorscheme = 'gruvbox_material'
 
@@ -337,7 +337,7 @@ if exists('g:started_by_firenvim') && g:started_by_firenvim
 endif
 
 """"""""""""""""""""""""""""""nvim-gdb settings""""""""""""""""""""""""""""""
-nnoremap <leader>dp :<C-U>GdbStartPDB python -m pdb %<CR>
+nnoremap <leader>bb :<C-U>GdbStartPDB python -m pdb %<CR>
 
 """"""""""""""""""""""""""""""wilder.nvim settings""""""""""""""""""""""""""""""
 call timer_start(250, { -> s:wilder_init() })
