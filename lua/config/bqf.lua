@@ -1,6 +1,8 @@
 require("bqf").setup {
-  auto_resize_height = false,
+  -- auto_resize_height = false,
   preview = {
-    auto_preview = false,
+    -- auto_preview = false,
+    -- description = [[The winblend for preview window, `:h winblend`]],
+    winblend = 0
   },
 }
