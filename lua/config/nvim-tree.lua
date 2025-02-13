@@ -1,8 +1,60 @@
 local keymap = vim.keymap
 local nvim_tree = require("nvim-tree")
 
+local api = require("nvim-tree.api")
+
+local function edit_or_open()
+  local node = api.tree.get_node_under_cursor()
+
+  if node.nodes ~= nil then
+    -- expand or collapse folder
+    api.node.open.edit()
+  else
+    -- open file
+    api.node.open.edit()
+    -- Close the tree if file was opened
+    api.tree.close()
+  end
+end
+
+-- open as vsplit on current node
+local function vsplit_preview()
+  local node = api.tree.get_node_under_cursor()
+
+  if node.nodes ~= nil then
+    -- expand or collapse folder
+    api.node.open.edit()
+  else
+    -- open file as vsplit
+    api.node.open.vertical()
+  end
+
+  -- Finally refocus on tree if it was lost
+  api.tree.focus()
+end
+
+local function my_on_attach(bufnr)
+
+  local function opts(desc)
+    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+
+  -- default mappings
+  api.config.mappings.default_on_attach(bufnr)
+
+  -- custom mappings
+  -- on_attach
+  keymap.set("n", "l", edit_or_open,          opts("Edit Or Open"))
+  keymap.set("n", "L", vsplit_preview,        opts("Vsplit Preview"))
+  keymap.set("n", "h", api.tree.close,        opts("Close"))
+  keymap.set("n", "H", api.tree.collapse_all, opts("Collapse All"))
+  keymap.set("n", "v", api.node.open.vertical, opts("Open: Vertical Split"))
+
+end
+
 nvim_tree.setup {
   auto_reload_on_write = true,
+  on_attach = my_on_attach,
   disable_netrw = false,
   hijack_netrw = true,
   hijack_cursor = false,
@@ -11,7 +63,7 @@ nvim_tree.setup {
   sort_by = "name",
   update_cwd = false,
   view = {
-    width = 30,
+    width = 60,
     side = "left",
     preserve_window_proportions = false,
     number = false,
@@ -102,7 +154,7 @@ nvim_tree.setup {
   },
 }
 
-keymap.set("n", "<space>s", require("nvim-tree.api").tree.toggle, {
+keymap.set("n", "<space>s", api.tree.toggle, {
   silent = true,
   desc = "toggle nvim-tree",
 })
