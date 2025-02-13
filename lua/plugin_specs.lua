@@ -109,6 +109,14 @@ local plugin_specs = {
     end,
   },
 
+  {
+    "ThePrimeagen/vim-be-good",
+    cmd = { "VimBeGood" }
+    -- config = function()
+    --   require("config.nvim_hop")
+    -- end,
+  },
+
   -- Show match number and index for searching
   {
     "kevinhwang91/nvim-hlslens",
