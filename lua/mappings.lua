@@ -260,3 +260,25 @@ keymap.set("n", "<leader>cb", function()
     end)
   )
 end, { desc = "show cursor" })
+
+
+-- Toggle function
+function ToggleTextWrap()
+  if vim.o.textwidth == 80 then
+    vim.o.textwidth = 0 -- Reset to default (no auto-wrapping)
+    vim.o.wrap = false  -- Disable visual wrapping
+    print("Auto-wrap disabled")
+  else
+    vim.o.textwidth = 80 -- Set max width for auto-wrapping
+    vim.o.wrap = true    -- Enable visual wrapping
+    print("Auto-wrap enabled")
+  end
+end
+
+-- Keybinding for toggling (e.g., <leader>w)
+keymap.set("n", "<space>kl", ":lua ToggleTextWrap()<CR>", { noremap = true, silent = true })
+-- Indent with tabs in visual mode
+keymap.set('n', '<leader>km', ':setlocal noexpandtab<CR>',
+  { desc = "Set tabs to replace spaces", noremap = true, silent = true })
+keymap.set('n', '<leader>kn', ':setlocal expandtab<CR>',
+  { desc = "Set spaces to replace tabs", noremap = true, silent = true })

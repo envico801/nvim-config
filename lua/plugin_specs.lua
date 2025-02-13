@@ -206,6 +206,15 @@ local plugin_specs = {
     --     vim.g.VM_default_mappings = true
     -- end
   },
+  {
+    "nyngwang/NeoZoom.lua",
+    keys = {
+      { "<space>kk", function() vim.cmd('NeoZoomToggle') end, mode = "n", silent = true, nowait = true, desc = "Toggle NeoZoom" },
+    },
+    config = function ()
+      require('config.neozoom')
+    end
+  },
   -- {
   --   "edkolev/tmuxline.vim",
   --   config = function ()
