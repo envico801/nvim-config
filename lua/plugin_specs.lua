@@ -198,6 +198,14 @@ local plugin_specs = {
       require('config.smart-splits-nvim')
     end
   },
+  {
+    "mg979/vim-visual-multi",
+    branch = "master",
+    event = "BufReadPost",  -- Loads plugin when a buffer is read
+    -- config = function()
+    --     vim.g.VM_default_mappings = true
+    -- end
+  },
   },
   -- {
   --   "ibhagwan/fzf-lua",

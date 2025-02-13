@@ -136,6 +136,13 @@ local get_active_lsp = function()
   return msg
 end
 
+vim.g.VM_set_statusline = 0
+vim.g.VM_silent_exit = 1
+
+local function get_patterns()
+  return vim.fn["VMInfos"]().ratio or ""
+end
+
 require("lualine").setup {
   options = {
     icons_enabled = true,
@@ -182,13 +189,17 @@ require("lualine").setup {
     },
     lualine_x = {
       {
+        get_patterns,
+        color = { fg = "black", bg = "#c7241d" },
+      },
+      {
         get_active_lsp,
         icon = " LSP:",
       },
       {
         "diagnostics",
         sources = { "nvim_diagnostic" },
-        symbols = { error = "🆇 ", warn = "⚠️ ", info = "ℹ️ ", hint = " " },
+        symbols = { error = "● ", warn = "▲ ", info = "■ ", hint = "◆ " }
       },
     },
     lualine_y = {

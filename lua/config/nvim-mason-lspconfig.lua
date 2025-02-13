@@ -76,13 +76,25 @@ require("mason-lspconfig").setup_handlers({
     require("lspconfig").ltex.setup({
       on_attach = lsp_config.custom_attach,
       capabilities = lsp_config.capabilities,
-      filetypes = { "text", "plaintex", "tex", "markdown" },
+      -- filetypes = { "text", "plaintex", "tex", "markdown" },
       settings = {
         ltex = {
           language = "en"
         },
       },
-      flags = { debounce_text_changes = 300 },
+      flags = {
+        debounce_text_changes = 10000,
+      },
+      -- handlers = {
+      --   ["textDocument/publishDiagnostics"] = vim.lsp.with(
+      --     vim.lsp.diagnostic.on_publish_diagnostics, {
+      --       -- Disable updates in insert mode
+      --       update_in_insert = false,
+      --       -- Keep your existing high debounce
+      --       delay = 10000,
+      --     }
+      --   )
+      -- }
     })
   end,
 
