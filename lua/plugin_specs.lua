@@ -450,7 +450,7 @@ local plugin_specs = {
   -- Automatic insertion and deletion of a pair of characters
   {
     "windwp/nvim-autopairs",
-    event = "InsertEnter",
+    -- event = "InsertEnter",
     config = true,
   },
 
