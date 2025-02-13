@@ -7,14 +7,14 @@ hop.setup {
   match_mappings = { "zh_sc" }
 }
 
-keymap.set({ "n", "v", "o" }, "f", "", {
-  silent = true,
-  noremap = true,
-  callback = function()
-    hop.hint_char2()
-  end,
-  desc = "nvim-hop char2",
-})
+-- keymap.set({ "n", "v", "o" }, "f", "", {
+--   silent = true,
+--   noremap = true,
+--   callback = function()
+--     hop.hint_char1()
+--   end,
+--   desc = "nvim-hop char1",
+-- })
 
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",

@@ -106,7 +106,10 @@ local plugin_specs = {
   -- Super fast buffer jump
   {
     "smoka7/hop.nvim",
-    event = "VeryLazy",
+    -- event = "VeryLazy",
+    keys = {
+      { "f", function() require('hop').hint_char1() end, mode = { "n", "v", "o" }, silent = true, noremap = true, desc = "nvim-hop char1" },
+    },
     config = function()
       require("config.nvim_hop")
     end,
