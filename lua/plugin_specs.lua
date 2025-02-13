@@ -21,6 +21,9 @@ local firenvim_not_active = function()
 end
 
 local plugin_specs = {
+  { "LazyVim/LazyVim", import = "lazyvim.plugins.extras.dap.core" },
+  -- { import = "lazyvim.plugins.extras.dap.core" },
+  -- { import = "plugins" },
   -- auto-completion engine
   {
     "iguanacucumber/magazine.nvim",
@@ -38,6 +41,43 @@ local plugin_specs = {
     config = function()
       require("config.nvim-cmp")
     end,
+  },
+  {
+    "mfussenegger/nvim-dap",
+    cmd = { "DapToggleBreakpoint", "DapContinue" },
+    dependencies = {
+      "theHamsta/nvim-dap-virtual-text",
+      "nvim-neotest/nvim-nio",
+      "rcarriga/nvim-dap-ui",
+      {
+        "Joakker/lua-json5",
+        build = "./install.sh",
+      },
+      -- Install the vscode-js-debug adapter
+      {
+        "microsoft/vscode-js-debug",
+        -- After install, build it and rename the dist directory to out
+        build = "npm install --legacy-peer-deps --no-save && npx gulp vsDebugServerBundle && rm -rf out && mv dist out",
+        version = "1.*",
+        dependencies = {
+          {
+            "mxsdev/nvim-dap-vscode-js",
+            config = function()
+              require('config.nvim-dap-vscode-js')
+            end,
+          }
+        }
+      },
+      {
+        "jay-babu/mason-nvim-dap.nvim",
+        config = function ()
+          require('config.nvim-mason-dap')
+        end
+      },
+    },
+    config = function ()
+      require('config.nvim-dap')
+    end
   },
   -- LSP Support
   {
