@@ -212,6 +212,38 @@ local plugin_specs = {
   --     require('config.tmuxline')
   --   end
   -- },
+  {
+    "nvim-telescope/telescope.nvim",
+    branch = '0.1.x',
+    -- cmd = "Telescope",
+    -- keys = {
+    --   { "<leader>ff", function() require('telescope.builtin').find_files() end, desc = "Telescope find files" },
+    --   { "<leader>fg", function() require('telescope.builtin').live_grep() end, desc = "Telescope live grep" },
+    --   { "<leader>fb", function() require('telescope.builtin').buffers() end, desc = "Telescope buffers" },
+    --   { "<leader>fh", function() require('telescope.builtin').help_tags() end, desc = "Telescope help tags" },
+    -- },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release',
+      },
+      {
+        "nvim-telescope/telescope-smart-history.nvim",
+        dependencies = {
+          {
+            "kkharji/sqlite.lua"
+          },
+        }
+      },
+      "nvim-telescope/telescope-frecency.nvim",
+      "fcying/telescope-ctags-outline.nvim",
+      -- "nvim-telescope/telescope-ui-select.nvim"
+    },
+    config = function ()
+      require('config.telescope')
+    end
   },
   -- {
   --   "ibhagwan/fzf-lua",
