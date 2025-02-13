@@ -149,13 +149,20 @@ local plugin_specs = {
       require("config.harpoon")
     end
   },
-  "nvim-lua/plenary.nvim",
   {
-    "nvim-telescope/telescope.nvim",
-    cmd = "Telescope",
+    "nvim-pack/nvim-spectre",
     dependencies = {
-      "nvim-telescope/telescope-symbols.nvim",
+      "nvim-lua/plenary.nvim",
     },
+    keys = {
+      { "<leader>S", "<cmd>lua require('spectre').toggle()<CR>", desc = "Toggle Spectre" },
+      { "<leader>sw", "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", mode = "n", desc = "Search current word" },
+      { "<leader>sw", "<esc><cmd>lua require('spectre').open_visual()<CR>", mode = "v", desc = "Search current word" },
+      { "<leader>sp", "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>", desc = "Search on current file" },
+    },
+    config = function ()
+      require('config.spectre-nvim')
+    end
   },
   {
   },
