@@ -66,12 +66,12 @@ local plugin_specs = {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    enabled = function()
-      if vim.g.is_mac then
-        return true
-      end
-      return false
-    end,
+    -- enabled = function()
+    --   if vim.g.is_mac then
+    --     return true
+    --   end
+    --   return false
+    -- end,
     event = "VeryLazy",
     build = ":TSUpdate",
     config = function()
@@ -82,23 +82,23 @@ local plugin_specs = {
   -- Python-related text object
   { "jeetsukumaran/vim-pythonsense", ft = { "python" } },
 
-  { "machakann/vim-swap", event = "VeryLazy" },
+  -- { "machakann/vim-swap", event = "VeryLazy" },
 
   -- IDE for Lisp
   -- 'kovisoft/slimv'
-  {
-    "vlime/vlime",
-    enabled = function()
-      if utils.executable("sbcl") then
-        return true
-      end
-      return false
-    end,
-    config = function(plugin)
-      vim.opt.rtp:append(plugin.dir .. "/vim")
-    end,
-    ft = { "lisp" },
-  },
+  -- {
+  --   "vlime/vlime",
+  --   enabled = function()
+  --     if utils.executable("sbcl") then
+  --       return true
+  --     end
+  --     return false
+  --   end,
+  --   config = function(plugin)
+  --     vim.opt.rtp:append(plugin.dir .. "/vim")
+  --   end,
+  --   ft = { "lisp" },
+  -- },
 
   -- Super fast buffer jump
   {
@@ -118,18 +118,20 @@ local plugin_specs = {
       require("config.hlslens")
     end,
   },
-  {
-    "Yggdroot/LeaderF",
-    cmd = "Leaderf",
-    build = function()
-      local leaderf_path = plugin_dir .. "/LeaderF"
-      vim.opt.runtimepath:append(leaderf_path)
-      vim.cmd("runtime! plugin/leaderf.vim")
+  -- {
+  --   "Yggdroot/LeaderF",
+  --   cmd = "Leaderf",
+  --   build = function()
+  --     local leaderf_path = plugin_dir .. "/LeaderF"
+  --     vim.opt.runtimepath:append(leaderf_path)
+  --     vim.cmd("runtime! plugin/leaderf.vim")
 
-      if not vim.g.is_win then
-        vim.cmd("LeaderfInstallCExtension")
-      end
-    end,
+  --     if not vim.g.is_win then
+  --       vim.cmd("LeaderfInstallCExtension")
+  --     end
+  --   end,
+  -- },
+  {
     "ThePrimeagen/harpoon",
     -- event = "BufReadPost",
     keys = {
@@ -156,14 +158,16 @@ local plugin_specs = {
     },
   },
   {
-    "ibhagwan/fzf-lua",
-    -- optional for icon support
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      -- calling `setup` is optional for customization
-      require("fzf-lua").setup {}
-    end,
   },
+  -- {
+  --   "ibhagwan/fzf-lua",
+  --   -- optional for icon support
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   config = function()
+  --     -- calling `setup` is optional for customization
+  --     require("fzf-lua").setup {}
+  --   end,
+  -- },
   {
     "MeanderingProgrammer/markdown.nvim",
     main = "render-markdown",
@@ -260,24 +264,24 @@ local plugin_specs = {
 
   -- For Windows and Mac, we can open an URL in the browser. For Linux, it may
   -- not be possible since we maybe in a server which disables GUI.
-  {
-    "chrishrb/gx.nvim",
-    keys = { { "gx", "<cmd>Browse<cr>", mode = { "n", "x" } } },
-    cmd = { "Browse" },
-    init = function()
-      vim.g.netrw_nogx = 1 -- disable netrw gx
-    end,
-    enabled = function()
-      if vim.g.is_win or vim.g.is_mac then
-        return true
-      else
-        return false
-      end
-    end,
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = true, -- default settings
-    submodules = false, -- not needed, submodules are required only for tests
-  },
+  -- {
+  --   "chrishrb/gx.nvim",
+  --   keys = { { "gx", "<cmd>Browse<cr>", mode = { "n", "x" } } },
+  --   cmd = { "Browse" },
+  --   init = function()
+  --     vim.g.netrw_nogx = 1 -- disable netrw gx
+  --   end,
+  --   enabled = function()
+  --     if vim.g.is_win or vim.g.is_mac then
+  --       return true
+  --     else
+  --       return false
+  --     end
+  --   end,
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  --   config = true, -- default settings
+  --   submodules = false, -- not needed, submodules are required only for tests
+  -- },
 
   -- Only install these plugins if ctags are installed on the system
   -- show file tags in vim window
@@ -337,27 +341,29 @@ local plugin_specs = {
 
   { "nvim-zh/better-escape.vim", event = { "InsertEnter" } },
 
-  {
-    "lyokha/vim-xkbswitch",
-    enabled = function()
-      if vim.g.is_mac and utils.executable("xkbswitch") then
-        return true
-      end
-      return false
-    end,
-    event = { "InsertEnter" },
-  },
+  -- Keyboard layout switch (EN/CH)
+  -- {
+  --   "lyokha/vim-xkbswitch",
+  --   enabled = function()
+  --     if vim.g.is_mac and utils.executable("xkbswitch") then
+  --       return true
+  --     end
+  --     return false
+  --   end,
+  --   event = { "InsertEnter" },
+  -- },
 
-  {
-    "Neur1n/neuims",
-    enabled = function()
-      if vim.g.is_win then
-        return true
-      end
-      return false
-    end,
-    event = { "InsertEnter" },
-  },
+  -- Language switch (EN/CH)
+  -- {
+  --   "Neur1n/neuims",
+  --   enabled = function()
+  --     if vim.g.is_win then
+  --       return true
+  --     end
+  --     return false
+  --   end,
+  --   event = { "InsertEnter" },
+  -- },
 
   -- Auto format tools
   { "sbdchd/neoformat", cmd = { "Neoformat" } },
@@ -509,20 +515,20 @@ local plugin_specs = {
     end,
   },
   -- Debugger plugin
-  {
-    "sakhnik/nvim-gdb",
-    enabled = function()
-      if vim.g.is_win or vim.g.is_linux then
-        return true
-      end
-      return false
-    end,
-    build = { "bash install.sh" },
-    lazy = true,
-  },
+  -- {
+  --   "sakhnik/nvim-gdb",
+  --   enabled = function()
+  --     if vim.g.is_win or vim.g.is_linux then
+  --       return true
+  --     end
+  --     return false
+  --   end,
+  --   build = { "bash install.sh" },
+  --   lazy = true,
+  -- },
 
   -- Session management plugin
-  { "tpope/vim-obsession", cmd = "Obsession" },
+  -- { "tpope/vim-obsession", cmd = "Obsession" },
 
   {
     "ojroques/vim-oscyank",
