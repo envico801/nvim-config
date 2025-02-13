@@ -72,6 +72,9 @@ local plugin_specs = {
     --   end
     --   return false
     -- end,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-context",
+    },
     event = "VeryLazy",
     build = ":TSUpdate",
     config = function()
@@ -501,6 +504,9 @@ local plugin_specs = {
   {
     "kevinhwang91/nvim-bqf",
     ft = "qf",
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+    },
     config = function()
       require("config.bqf")
     end,
