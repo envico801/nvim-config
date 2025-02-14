@@ -3,7 +3,8 @@ local lsp_config = require("config.lsp")
 require("mason-lspconfig").setup {
   -- A list of servers to automatically install if they're not already installed
   ensure_installed = {
-    "pylsp",
+    "pyright",  -- Changed from pylsp to pyright
+    "ruff",     -- Added ruff
     "ltex",
     "clangd",
     "vimls",
@@ -25,49 +26,63 @@ require("mason-lspconfig").setup_handlers({
     })
   end,
 
-  -- Special handler for pylsp
-  ["pylsp"] = function()
-    local venv_path = os.getenv('VIRTUAL_ENV')
-    local py_path = nil
-    -- decide which python executable to use for mypy
-    if venv_path ~= nil then
-      py_path = venv_path .. "/bin/python3"
-    else
-      py_path = vim.g.python3_host_prog
-    end
+  -- Special handler for pyright
+  ["pyright"] = function()
+    local new_capability = {
+      textDocument = {
+        publishDiagnostics = {
+          tagSupport = {
+            valueSet = { 2 }
+          }
+        }
+      }
+    }
+    local merged_capability = vim.tbl_deep_extend("force", lsp_config.capabilities, new_capability)
 
-    require("lspconfig").pylsp.setup({
+    require("lspconfig").pyright.setup({
       on_attach = lsp_config.custom_attach,
-      capabilities = lsp_config.capabilities,
+      capabilities = merged_capability,
       settings = {
-        pylsp = {
-          plugins = {
-            -- formatter options
-            black = { enabled = true },
-            autopep8 = { enabled = false },
-            yapf = { enabled = false },
-            -- linter options
-            pylint = { enabled = true, executable = "pylint" },
-            ruff = { enabled = false },
-            pyflakes = { enabled = false },
-            pycodestyle = { enabled = false },
-            -- type checker
-            pylsp_mypy = {
-              enabled = true,
-              overrides = { "--python-executable", py_path, true },
-              report_progress = true,
-              live_mode = false
+        pyright = {
+          disableOrganizeImports = true,
+          disableTaggedHints = false,
+        },
+        python = {
+          analysis = {
+            autoSearchPaths = true,
+            diagnosticMode = "workspace",
+            typeCheckingMode = "standard",
+            useLibraryCodeForTypes = true,
+            diagnosticSeverityOverrides = {
+              deprecateTypingAliases = false,
             },
-            -- auto-completion options
-            jedi_completion = { fuzzy = true },
-            -- import sorting
-            isort = { enabled = true },
+            inlayHints = {
+              callArgumentNames = "partial",
+              functionReturnTypes = true,
+              pytestParameters = true,
+              variableTypes = true,
+            },
           },
         },
       },
-      flags = {
-        debounce_text_changes = 200,
-      },
+    })
+  end,
+
+  -- Special handler for ruff
+  ["ruff"] = function()
+    require("lspconfig").ruff.setup({
+      on_attach = function(client, bufnr)
+        -- Disable hover in favor of Pyright
+        client.server_capabilities.hoverProvider = false
+        -- Call the regular custom_attach
+        lsp_config.custom_attach(client, bufnr)
+      end,
+      capabilities = lsp_config.capabilities,
+      init_options = {
+        settings = {
+          organizeImports = true,
+        }
+      }
     })
   end,
 
