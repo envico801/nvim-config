@@ -123,7 +123,7 @@ require("mason-lspconfig").setup_handlers({
 
   -- Special handler for lua_ls
   ["lua_ls"] = function()
-    -- settings for lua-language-server can be found on https://github.com/LuaLS/lua-language-server/wiki/Settings .
+    -- settings for lua-language-server can be found on https://luals.github.io/wiki/settings/
     require("lspconfig").lua_ls.setup({
       on_attach = lsp_config.custom_attach,
       capabilities = lsp_config.capabilities,
@@ -133,6 +133,9 @@ require("mason-lspconfig").setup_handlers({
             -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
             version = "LuaJIT",
           },
+          hint = {
+            enable = true
+          }
         },
       },
     })

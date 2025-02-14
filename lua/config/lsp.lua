@@ -52,6 +52,10 @@ function M.custom_attach(client, bufnr)
     map("n", "<space>f", vim.lsp.buf.format, { desc = "format code" })
   end
 
+  -- Uncomment code below to enable inlay hint from language server, some LSP server supports inlay hint,
+  -- but disable this feature by default, so you may need to enable inlay hint in the LSP server config.
+  vim.lsp.inlay_hint.enable(true, { buffer = bufnr })
+
   api.nvim_create_autocmd("CursorHold", {
     buffer = bufnr,
     callback = function()
