@@ -12,10 +12,10 @@ local set_qflist = function(buf_num, severity)
   diagnostics = diagnostic.get(buf_num, { severity = severity })
 
   local qf_items = diagnostic.toqflist(diagnostics)
-  vim.fn.setqflist({}, ' ', { title = 'Diagnostics', items = qf_items })
+  vim.fn.setqflist({}, " ", { title = "Diagnostics", items = qf_items })
 
   -- open quickfix by default
-  vim.cmd [[copen]]
+  vim.cmd([[copen]])
 end
 
 -- Custom attach function for LSP
@@ -39,7 +39,9 @@ function M.custom_attach(client, bufnr)
   -- this puts diagnostics from opened files to quickfix
   map("n", "<space>qw", diagnostic.setqflist, { desc = "put window diagnostics to qf" })
   -- this puts diagnostics from current buffer to quickfix
-  map("n", "<space>qb", function() set_qflist(bufnr) end, { desc = "put buffer diagnostics to qf" })
+  map("n", "<space>qb", function()
+    set_qflist(bufnr)
+  end, { desc = "put buffer diagnostics to qf" })
   map("n", "<space>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
   map("n", "<space>wa", vim.lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
   map("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
@@ -78,8 +80,9 @@ function M.custom_attach(client, bufnr)
       end
 
       local cursor_pos = api.nvim_win_get_cursor(0)
-      if (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
-          and #diagnostic.get() > 0
+      if
+        (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
+        and #diagnostic.get() > 0
       then
         diagnostic.open_float(nil, float_opts)
       end
@@ -102,7 +105,7 @@ function M.custom_attach(client, bufnr)
       buffer = bufnr,
       callback = function()
         lsp.buf.document_highlight()
-      end
+      end,
     })
 
     api.nvim_create_autocmd("CursorMoved", {
@@ -110,7 +113,7 @@ function M.custom_attach(client, bufnr)
       buffer = bufnr,
       callback = function()
         lsp.buf.clear_references()
-      end
+      end,
     })
   end
 
@@ -121,11 +124,11 @@ function M.custom_attach(client, bufnr)
 end
 
 -- Setup capabilities
-M.capabilities = require('cmp_nvim_lsp').default_capabilities()
+M.capabilities = require("cmp_nvim_lsp").default_capabilities()
 -- required by nvim-ufo
 M.capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
-  lineFoldingOnly = true
+  lineFoldingOnly = true,
 }
 
 -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
