@@ -3,8 +3,8 @@ local lsp_config = require("config.lsp")
 require("mason-lspconfig").setup {
   -- A list of servers to automatically install if they're not already installed
   ensure_installed = {
-    "pyright",  -- Changed from pylsp to pyright
-    "ruff",     -- Added ruff
+    "pyright", -- Changed from pylsp to pyright
+    "ruff",    -- Added ruff
     "ltex",
     "clangd",
     "vimls",
@@ -44,6 +44,7 @@ require("mason-lspconfig").setup_handlers({
       capabilities = merged_capability,
       settings = {
         pyright = {
+          -- disable import sorting and use Ruff for this
           disableOrganizeImports = true,
           disableTaggedHints = false,
         },
@@ -53,9 +54,11 @@ require("mason-lspconfig").setup_handlers({
             diagnosticMode = "workspace",
             typeCheckingMode = "standard",
             useLibraryCodeForTypes = true,
+            -- we can this setting below to redefine some diagnostics
             diagnosticSeverityOverrides = {
               deprecateTypingAliases = false,
             },
+            -- inlay hint settings are provided by pylance?
             inlayHints = {
               callArgumentNames = "partial",
               functionReturnTypes = true,
