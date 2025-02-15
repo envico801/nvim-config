@@ -99,6 +99,9 @@ local plugin_specs = {
           require("config.nvim-mason-lspconfig")
         end,
       },
+      {
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+      }
     },
     config = function()
       require("config.lsp")
