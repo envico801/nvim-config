@@ -11,6 +11,7 @@ require("mason-lspconfig").setup {
     "bashls",
     "lua_ls",
     "ts_ls",
+    "stylua"
     -- Add any other servers you want to install
   },
   -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed
