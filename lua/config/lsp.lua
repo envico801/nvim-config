@@ -50,14 +50,8 @@ function M.custom_attach(client, bufnr)
   end, { desc = "list workspace folder" })
 
   -- Set some key bindings conditional on server capabilities
-  if client.server_capabilities.documentFormattingProvider then
-    -- For Lua files, use Stylua
-    if vim.bo.filetype == "lua" then
-      map({ "n", "x" }, "<space>f", "<cmd>silent !stylua %<CR>", { desc = "format with stylua" })
-    else
-      -- For all other filetypes, use LSP formatting
-      map({ "n", "x" }, "<space>f", vim.lsp.buf.format, { desc = "format code" })
-    end
+  if client.server_capabilities.documentFormattingProvider and client.name ~= "lua_ls" then
+    map({ "n", "x" }, "<space>f", vim.lsp.buf.format, { desc = "format code" })
   end
 
   -- Uncomment code below to enable inlay hint from language server, some LSP server supports inlay hint,
