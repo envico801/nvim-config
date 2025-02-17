@@ -1,12 +1,11 @@
 local lsp_config = require("config.lsp")
 
-require('mason-tool-installer').setup ({
+require('mason-tool-installer').setup({
 
   -- a list of all tools you want to ensure are installed upon
   -- start
   ensure_installed = {
     -- LSP
-    "pyright",
     "ruff",
     "ltex",
     "clangd",
@@ -14,6 +13,7 @@ require('mason-tool-installer').setup ({
     "bashls",
     "lua_ls",
     "ts_ls",
+    "basedpyright",
 
     -- Formatters
     "stylua",
@@ -21,7 +21,7 @@ require('mason-tool-installer').setup ({
     "prettier",
 
     -- Linters
-    "flake8",
+    -- "flake8",
     "shellcheck",
 
     -- DAP
@@ -44,7 +44,7 @@ require('mason-tool-installer').setup ({
   -- effective if run_on_start is set to true.
   -- e.g.: 5000 = 5 second delay, 10000 = 10 second delay, etc...
   -- Default: 0
-  start_delay = 3000, -- 3 second delay
+  -- start_delay = 3000, -- 3 second delay
 
   -- Only attempt to install if 'debounce_hours' number of hours has
   -- elapsed since the last time Neovim was started. This stores a
@@ -68,6 +68,8 @@ require('mason-tool-installer').setup ({
   },
 })
 
+vim.cmd("MasonToolsInstall")
+
 require("mason-lspconfig").setup_handlers({
   -- Default handler
   function(server_name)
@@ -77,8 +79,8 @@ require("mason-lspconfig").setup_handlers({
     })
   end,
 
-  -- Special handler for pyright
-  ["pyright"] = function()
+  -- Special handler for basedpyright
+  ["basedpyright"] = function()
     local new_capability = {
       textDocument = {
         publishDiagnostics = {
@@ -94,33 +96,31 @@ require("mason-lspconfig").setup_handlers({
     }
     local merged_capability = vim.tbl_deep_extend("force", lsp_config.capabilities, new_capability)
 
-    require("lspconfig").pyright.setup({
+    require("lspconfig").basedpyright.setup({
       on_attach = lsp_config.custom_attach,
       capabilities = merged_capability,
       settings = {
-        pyright = {
+        basedpyright = {
           -- disable import sorting and use Ruff for this
           disableOrganizeImports = true,
           disableTaggedHints = false,
         },
-        python = {
-          analysis = {
-            autoSearchPaths = true,
-            diagnosticMode = "workspace",
-            typeCheckingMode = "standard",
-            useLibraryCodeForTypes = true,
-            -- we can this setting below to redefine some diagnostics
-            diagnosticSeverityOverrides = {
-              deprecateTypingAliases = false,
-            },
-            -- inlay hint settings are provided by pylance?
-            inlayHints = {
-              callArgumentNames = "partial",
-              functionReturnTypes = true,
-              pytestParameters = true,
-              variableTypes = true,
-            },
+        analysis = {
+          autoSearchPaths = true,
+          diagnosticMode = "workspace",
+          typeCheckingMode = "standard",
+          useLibraryCodeForTypes = true,
+          -- we can this setting below to redefine some diagnostics
+          diagnosticSeverityOverrides = {
+            deprecateTypingAliases = false,
           },
+          -- inlay hint settings are provided by pylance?
+          inlayHints = {
+            callArgumentNames = true,
+            functionReturnTypes = true,
+            genericTypes = true,
+            variableTypes = true,
+          }
         },
       },
     })
