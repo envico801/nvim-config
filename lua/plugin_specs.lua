@@ -119,9 +119,6 @@ local plugin_specs = {
     --   end
     --   return false
     -- end,
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-context",
-    },
     event = "VeryLazy",
     build = ":TSUpdate",
     config = function()
