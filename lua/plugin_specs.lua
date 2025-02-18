@@ -101,6 +101,10 @@ local plugin_specs = {
       },
       {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
+        cmd = "MasonToolsInstall",
+        config = function()
+          vim.cmd("MasonToolsInstall")
+        end
       }
     },
     config = function()

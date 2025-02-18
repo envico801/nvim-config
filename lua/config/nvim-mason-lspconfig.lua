@@ -68,8 +68,6 @@ require('mason-tool-installer').setup({
   },
 })
 
-vim.cmd("MasonToolsInstall")
-
 require("mason-lspconfig").setup_handlers({
   -- Default handler
   function(server_name)
