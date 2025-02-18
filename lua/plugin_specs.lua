@@ -297,7 +297,17 @@ local plugin_specs = {
         "nvim-telescope/telescope-smart-history.nvim",
         dependencies = {
           {
-            "kkharji/sqlite.lua"
+            "kkharji/sqlite.lua",
+            enabled = function()
+              -- Only enable if we can load sqlite
+              return not jit.os:find("Windows") or vim.fn.filereadable(vim.fn.stdpath("config") .. "/lua/config/databases/sqlite3.dll") == 1
+            end,
+            config = function()
+              -- Set sqlite path for Windows
+              if jit.os:find("Windows") then
+                vim.g.sqlite_clib_path = vim.fn.stdpath("config") .. "/lua/config/databases/sqlite3.dll"
+              end
+            end,
           },
         }
       },

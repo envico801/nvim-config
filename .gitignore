@@ -6,3 +6,5 @@ en.utf-8.add.spl
 .DS_Store
 lazy-lock.json
 lazyvim.json
+lua/config/databases/telescope_history.sqlite3
+
