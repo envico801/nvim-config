@@ -36,6 +36,7 @@ local plugin_specs = {
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-omni",
+      "hrsh7th/cmp-cmdline",
       "quangnguyen30192/cmp-nvim-ultisnips",
     },
     config = function()
@@ -697,12 +698,6 @@ local plugin_specs = {
       return false
     end,
     cmd = { "OSCYank", "OSCYankReg" },
-  },
-
-  -- The missing auto-completion for cmdline!
-  {
-    "gelguy/wilder.nvim",
-    build = ":UpdateRemotePlugins",
   },
 
   -- showing keybindings
