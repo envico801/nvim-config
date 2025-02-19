@@ -315,6 +315,9 @@ require("lualine").setup {
     lualine_x = {
       {
         get_patterns,
+        icon = "⭕",
+      },
+      {
         get_active_lsp,
         icon = "📡",
       },
