@@ -811,6 +811,9 @@ local plugin_specs = {
     opts = { -- set to setup table
     },
   },
+  {
+    "farmergreg/vim-lastplace"
+  }
 }
 
 require("lazy").setup {
