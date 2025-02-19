@@ -211,4 +211,39 @@ require("mason-lspconfig").setup_handlers({
       },
     })
   end,
+
+  -- Special handler for ts_ls
+  ["ts_ls"] = function()
+    require("lspconfig").ts_ls.setup({
+      on_attach = lsp_config.custom_attach,
+      capabilities = lsp_config.capabilities,
+      settings = {
+        typescript = {
+          inlayHints = {
+            includeInlayParameterNameHints = 'all',
+            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayVariableTypeHints = true,
+            includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayEnumMemberValueHints = true,
+          }
+        },
+        javascript = {
+          inlayHints = {
+            -- Same settings for JavaScript if needed
+            includeInlayParameterNameHints = 'all',
+            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayVariableTypeHints = true,
+            includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayEnumMemberValueHints = true,
+          }
+        }
+      }
+    })
+  end,
 })
