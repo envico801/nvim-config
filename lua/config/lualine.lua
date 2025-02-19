@@ -2,6 +2,43 @@ local fn = vim.fn
 
 local git_status_cache = {}
 
+-- Helper function to check the environment
+local function get_environment()
+  if vim.fn.has('win32') == 1 then
+    return 'windows'
+  end
+  
+  local output = vim.fn.systemlist('uname -r')
+  if output[1] and output[1]:lower():match('microsoft') then
+    return 'wsl'
+  end
+  
+  return 'linux'
+end
+
+-- Get the appropriate git executable path
+local function get_git_executable()
+  local env = get_environment()
+  
+  if env == 'windows' then
+    local win_paths = {
+      'C:\\Program Files\\Git\\cmd\\git.exe',
+      'C:\\Program Files (x86)\\Git\\cmd\\git.exe'
+    }
+    
+    for _, path in ipairs(win_paths) do
+      if vim.fn.executable(path) == 1 then
+        return path
+      end
+    end
+  end
+  
+  -- For WSL or Linux, just use the system git
+  return 'git'
+end
+
+local GIT_EXECUTABLE = get_git_executable()
+
 local on_exit_fetch = function(result)
   if result.code == 0 then
     git_status_cache.fetch_success = true
@@ -17,14 +54,27 @@ local function handle_numeric_result(cache_key)
 end
 
 local async_cmd = function(cmd_str, on_exit)
+  local base_cmd = vim.split(cmd_str, " ")
+  
+  -- Replace 'git' with the appropriate git path
+  if base_cmd[1] == "git" then
+    base_cmd[1] = GIT_EXECUTABLE
+  end
+  
   local cmd = vim.tbl_filter(function(element)
     return element ~= ""
-  end, vim.split(cmd_str, " "))
+  end, base_cmd)
 
   vim.system(cmd, { text = true }, on_exit)
 end
 
 local async_git_status_update = function()
+  -- Add a small delay to prevent rapid consecutive calls
+  if git_status_cache.last_update and (vim.loop.now() - git_status_cache.last_update) < 5000 then
+    return
+  end
+  git_status_cache.last_update = vim.loop.now()
+
   -- Fetch the latest changes from the remote repository (replace 'origin' if needed)
   async_cmd("git fetch origin", on_exit_fetch)
   if not git_status_cache.fetch_success then
@@ -42,6 +92,7 @@ local async_git_status_update = function()
   async_cmd(ahead_cmd_str, handle_numeric_result("ahead_count"))
 end
 
+-- Function to get git ahead/behind info with caching
 local function get_git_ahead_behind_info()
   async_git_status_update()
 
