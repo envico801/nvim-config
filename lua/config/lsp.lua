@@ -30,12 +30,18 @@ function M.custom_attach(client, bufnr)
 
   map("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
   map("n", "<C-]>", vim.lsp.buf.definition)
-  map("n", "K", vim.lsp.buf.hover)
-  map("n", "<C-o>", vim.lsp.buf.signature_help)
+  map("n", "K", function()
+    vim.lsp.buf.hover { border = "rounded" }
+  end)
+  map("n", "<C-k>", vim.lsp.buf.signature_help)
   map("n", "<space>rn", vim.lsp.buf.rename, { desc = "varialbe rename" })
   map("n", "gr", vim.lsp.buf.references, { desc = "show references" })
-  map("n", "[d", diagnostic.goto_prev, { desc = "previous diagnostic" })
-  map("n", "]d", diagnostic.goto_next, { desc = "next diagnostic" })
+  map("n", "[d", function()
+    diagnostic.jump { count = -1, float = true }
+  end, { desc = "previous diagnostic" })
+  map("n", "]d", function()
+    diagnostic.jump { count = 1, float = true }
+  end, { desc = "next diagnostic" })
   -- this puts diagnostics from opened files to quickfix
   map("n", "<space>qw", diagnostic.setqflist, { desc = "put window diagnostics to qf" })
   -- this puts diagnostics from current buffer to quickfix
@@ -57,6 +63,19 @@ function M.custom_attach(client, bufnr)
   -- Uncomment code below to enable inlay hint from language server, some LSP server supports inlay hint,
   -- but disable this feature by default, so you may need to enable inlay hint in the LSP server config.
   vim.lsp.inlay_hint.enable(true, { buffer = bufnr })
+
+  -- global config for diagnostic
+  diagnostic.config {
+    underline = false,
+    virtual_text = false,
+    signs = {
+      text = {
+        [diagnostic.severity.ERROR] = "🆇",
+        [diagnostic.severity.WARN] = "⚠️",
+        [diagnostic.severity.INFO] = "ℹ️",
+        [diagnostic.severity.HINT] = "",
+      },
+    },
 
   api.nvim_create_autocmd("CursorHold", {
     buffer = bufnr,
@@ -124,10 +143,5 @@ M.capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
   lineFoldingOnly = true,
 }
-
--- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
-lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
-  border = "rounded",
-})
 
 return M
