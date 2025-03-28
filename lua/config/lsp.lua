@@ -31,16 +31,16 @@ function M.custom_attach(client, bufnr)
   map("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
   map("n", "<C-]>", vim.lsp.buf.definition)
   map("n", "K", function()
-    vim.lsp.buf.hover { border = "rounded" }
+    vim.lsp.buf.hover { border = "single", max_height = 25 }
   end)
   map("n", "<C-k>", vim.lsp.buf.signature_help)
   map("n", "<space>rn", vim.lsp.buf.rename, { desc = "varialbe rename" })
   map("n", "gr", vim.lsp.buf.references, { desc = "show references" })
   map("n", "[d", function()
-    diagnostic.jump { count = -1, float = true }
+    diagnostic.jump { count = -1 }
   end, { desc = "previous diagnostic" })
   map("n", "]d", function()
-    diagnostic.jump { count = 1, float = true }
+    diagnostic.jump { count = 1 }
   end, { desc = "next diagnostic" })
   -- this puts diagnostics from opened files to quickfix
   map("n", "<space>qw", diagnostic.setqflist, { desc = "put window diagnostics to qf" })
@@ -68,37 +68,38 @@ function M.custom_attach(client, bufnr)
   diagnostic.config {
     underline = false,
     virtual_text = false,
+    virtual_lines = false,
     signs = {
       text = {
-        [diagnostic.severity.ERROR] = "● ",
-        [diagnostic.severity.WARN] = "▲ ",
-        [diagnostic.severity.INFO] = "■ ",
-        [diagnostic.severity.HINT] = "◆ ",
+        [diagnostic.severity.ERROR] = "●",
+        [diagnostic.severity.WARN] = "▲",
+        [diagnostic.severity.INFO] = "■",
+        [diagnostic.severity.HINT] = "◆",
       },
+    },
+    severity_sort = true,
+    float = {
+      source = true,
+      header = "Diagnostics:",
+      prefix = " ",
+      border = "single",
     },
   }
 
   api.nvim_create_autocmd("CursorHold", {
-    buffer = bufnr,
+    pattern = "*",
     callback = function()
-      local float_opts = {
-        focusable = false,
-        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-        border = "rounded",
-        source = "always", -- show source in diagnostic popup window
-        prefix = " ",
-      }
+      if #vim.diagnostic.get(0) == 0 then
+        return
+      end
 
       if not vim.b.diagnostics_pos then
         vim.b.diagnostics_pos = { nil, nil }
       end
 
       local cursor_pos = api.nvim_win_get_cursor(0)
-      if
-        (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
-        and #diagnostic.get() > 0
-      then
-        diagnostic.open_float(nil, float_opts)
+      if cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2] then
+        diagnostic.open_float()
       end
 
       vim.b.diagnostics_pos = cursor_pos
