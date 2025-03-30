@@ -774,7 +774,13 @@ local plugin_specs = {
   {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
-    opts = {},
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
@@ -810,7 +816,7 @@ local plugin_specs = {
     -- see discussion here: https://github.com/neovim/neovim/issues/14869
     "kosayoda/nvim-lightbulb",
     config = function()
-      require("nvim-lightbulb").setup { autocmd = { enabled = true } }
+      require("config.lightbulb")
     end,
   },
   {
@@ -840,6 +846,7 @@ local plugin_specs = {
   },
 }
 
+---@diagnostic disable-next-line: missing-fields
 require("lazy").setup {
   spec = plugin_specs,
   ui = {
