@@ -114,6 +114,13 @@ local plugin_specs = {
     end,
   },
   {
+    "dnlhc/glance.nvim",
+    config = function()
+      require("config.glance")
+    end,
+    envnt = "VeryLazy",
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     event = "VeryLazy",
     build = ":TSUpdate",
