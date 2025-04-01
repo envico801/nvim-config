@@ -54,7 +54,8 @@ set matchpairs+=<:>,「:」,『:』,【:】,“:”,‘:’,《:》
 set number relativenumber  " Show line number and relative line number
 
 " Ignore case in general, but become case-sensitive when uppercase is present
-set ignorecase smartcase
+" set ignorecase smartcase
+set ignorecase
 
 " File and script encoding settings for vim
 set fileencoding=utf-8
