@@ -557,6 +557,28 @@ local plugin_specs = {
 
   {
     "sindrets/diffview.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewToggleFiles",
+    },
+    -- Fixes the fucking non-working piece of shit tree, suck it mel gibson
+    -- Force close any file tree
+    keys = {
+      {
+        "<leader>gj",
+        function()
+          vim.cmd.DiffviewOpen()
+          vim.defer_fn(function()
+            -- Use the Vim command instead of Lua API
+            pcall(vim.cmd.DiffviewToggleFiles)
+          end, 50)
+        end,
+        desc = "Clean Diff View"
+      },
+      { "<leader>gk", "<cmd>DiffviewClose<cr>", desc = "Close Diff" },
+    },
   },
 
   {

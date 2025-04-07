@@ -99,8 +99,8 @@ vim.keymap.set("n", "<leader>ft", builtin.git_files, { desc = "Telescope git fil
 vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "Telescope grep word under cursor" })
 vim.keymap.set("n", "<leader>fz", builtin.current_buffer_fuzzy_find, { desc = "Telescope buffer fuzzy find" })
 
-vim.keymap.set("n", "<leader>gj", "<cmd>DiffviewOpen<cr>", { desc = "Diffview Open" })
-vim.keymap.set("n", "<leader>gk", "<cmd>DiffviewClose<cr>", { desc = "Diffview Close" })
+-- vim.keymap.set("n", "<leader>gj", "<cmd>DiffviewOpen<cr>", { desc = "Diffview Open" })
+-- vim.keymap.set("n", "<leader>gk", "<cmd>DiffviewClose<cr>", { desc = "Diffview Close" })
 
 --vim.keymap.set("n", "<leader>fa", function()
 --  ---@diagnostic disable-next-line: param-type-mismatch
