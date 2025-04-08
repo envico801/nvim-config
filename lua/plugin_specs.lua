@@ -316,9 +316,9 @@ local plugin_specs = {
   -- {
   --   "ibhagwan/fzf-lua",
   --   config = function()
-  --     -- calling `setup` is optional for customization
-  --     require("fzf-lua").setup {}
+  --     require("config.fzf-lua")
   --   end,
+  --   event = "VeryLazy",
   -- },
   {
     "MeanderingProgrammer/markdown.nvim",
@@ -360,7 +360,7 @@ local plugin_specs = {
   },
   {
     "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
+    event = "BufRead",
     cond = firenvim_not_active,
     config = function()
       require("config.lualine")
@@ -548,6 +548,7 @@ local plugin_specs = {
     config = function()
       require("config.gitsigns")
     end,
+    event = "BufRead",
   },
 
   {
@@ -781,7 +782,7 @@ local plugin_specs = {
     config = function()
       require("config.lightbulb")
     end,
-    event = "VeryLazy",
+    event = "LspAttach",
   },
   {
     "Bekaboo/dropbar.nvim",
