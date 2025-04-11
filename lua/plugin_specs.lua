@@ -830,7 +830,20 @@ local plugin_specs = {
   },
   {
     "farmergreg/vim-lastplace"
-  }
+  },
+  {
+    "nvim-neorg/neorg",
+    lazy = false,
+    version = "*",
+    config = function()
+      require('config.neorg')
+    end,
+    dependencies = {
+      'nvim-neorg/lua-utils.nvim',
+      'pysan3/pathlib.nvim',
+      'nvim-neotest/nvim-nio',
+    },
+  },
 }
 
 require("lazy").setup {

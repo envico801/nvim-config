@@ -12,6 +12,7 @@ require("nvim-treesitter.configs").setup {
     "css",
     "markdown",
     "markdown_inline",
+    "norg"
   },
 
   -- Automatically install missing parsers when entering buffer

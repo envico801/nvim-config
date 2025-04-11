@@ -36,6 +36,7 @@ cmp.setup {
     { name = "ultisnips" }, -- For ultisnips user.
     { name = "path" }, -- for path completion
     { name = "buffer", keyword_length = 2 }, -- for buffer word completion
+    { name = "neorg" },
   },
   completion = {
     keyword_length = 1,
