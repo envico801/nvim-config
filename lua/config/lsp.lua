@@ -118,7 +118,7 @@ function M.custom_attach(client, bufnr)
 end
 
 -- Setup capabilities
-M.capabilities = require("cmp_nvim_lsp").default_capabilities()
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
 -- required by nvim-ufo
 M.capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
