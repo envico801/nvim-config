@@ -3,6 +3,19 @@ local nvim_tree = require("nvim-tree")
 
 local api = require("nvim-tree.api")
 
+-- Detect OS and set the system open command accordingly
+local system_open_cmd = ""
+if vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
+  -- For Windows, using cmd to open the file
+  system_open_cmd = 'explorer'
+elseif vim.fn.has("mac") == 1 then
+  -- For macOS, use "open"
+  system_open_cmd = "open"
+else
+  -- Assume Unix/Linux; use "xdg-open"
+  system_open_cmd = "xdg-open"
+end
+
 local function edit_or_open()
   local node = api.tree.get_node_under_cursor()
 
@@ -49,6 +62,7 @@ local function my_on_attach(bufnr)
   keymap.set("n", "h", api.tree.close,        opts("Close"))
   keymap.set("n", "H", api.tree.collapse_all, opts("Collapse All"))
   keymap.set("n", "v", api.node.open.vertical, opts("Open: Vertical Split"))
+  keymap.set("n", "s", api.node.run.system, opts("Open: In system explorer"))
 
 end
 
@@ -93,7 +107,7 @@ nvim_tree.setup {
     ignore_list = {},
   },
   system_open = {
-    cmd = "",
+    cmd = system_open_cmd,
     args = {},
   },
   diagnostics = {
