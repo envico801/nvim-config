@@ -72,7 +72,6 @@ require("mason-lspconfig").setup_handlers({
   -- Default handler
   function(server_name)
     require("lspconfig")[server_name].setup({
-      on_attach = lsp_config.custom_attach,
       capabilities = lsp_config.capabilities,
     })
   end,
@@ -95,7 +94,6 @@ require("mason-lspconfig").setup_handlers({
     local merged_capability = vim.tbl_deep_extend("force", lsp_config.capabilities, new_capability)
 
     require("lspconfig").basedpyright.setup({
-      on_attach = lsp_config.custom_attach,
       capabilities = merged_capability,
       settings = {
         basedpyright = {
@@ -127,12 +125,12 @@ require("mason-lspconfig").setup_handlers({
   -- Special handler for ruff
   ["ruff"] = function()
     require("lspconfig").ruff.setup({
-      on_attach = function(client, bufnr)
-        -- Disable hover in favor of Pyright
-        client.server_capabilities.hoverProvider = false
-        -- Call the regular custom_attach
-        lsp_config.custom_attach(client, bufnr)
-      end,
+      -- on_attach = function(client, bufnr)
+      --   -- Disable hover in favor of Pyright
+      --   client.server_capabilities.hoverProvider = false
+      --   -- Call the regular custom_attach
+      --   lsp_config.custom_attach(client, bufnr)
+      -- end,
       capabilities = lsp_config.capabilities,
       init_options = {
         settings = {
@@ -145,7 +143,6 @@ require("mason-lspconfig").setup_handlers({
   -- Special handler for ltex
   ["ltex"] = function()
     require("lspconfig").ltex.setup({
-      on_attach = lsp_config.custom_attach,
       capabilities = lsp_config.capabilities,
       -- filetypes = { "text", "plaintex", "tex", "markdown" },
       settings = {
@@ -172,7 +169,6 @@ require("mason-lspconfig").setup_handlers({
   -- Special handler for clangd
   ["clangd"] = function()
     require("lspconfig").clangd.setup({
-      on_attach = lsp_config.custom_attach,
       capabilities = lsp_config.capabilities,
       filetypes = { "c", "cpp", "cc" },
       flags = {
@@ -184,7 +180,6 @@ require("mason-lspconfig").setup_handlers({
   -- Special handler for vimls
   ["vimls"] = function()
     require("lspconfig").vimls.setup({
-      on_attach = lsp_config.custom_attach,
       capabilities = lsp_config.capabilities,
       flags = {
         debounce_text_changes = 500,
@@ -196,7 +191,6 @@ require("mason-lspconfig").setup_handlers({
   ["lua_ls"] = function()
     -- settings for lua-language-server can be found on https://luals.github.io/wiki/settings/
     require("lspconfig").lua_ls.setup({
-      on_attach = lsp_config.custom_attach,
       capabilities = lsp_config.capabilities,
       settings = {
         Lua = {
@@ -215,7 +209,6 @@ require("mason-lspconfig").setup_handlers({
   -- Special handler for ts_ls
   ["ts_ls"] = function()
     require("lspconfig").ts_ls.setup({
-      on_attach = lsp_config.custom_attach,
       capabilities = lsp_config.capabilities,
       settings = {
         typescript = {
