@@ -70,12 +70,13 @@ function M.custom_attach(client, bufnr)
     virtual_text = false,
     signs = {
       text = {
-        [diagnostic.severity.ERROR] = "🆇",
-        [diagnostic.severity.WARN] = "⚠️",
-        [diagnostic.severity.INFO] = "ℹ️",
-        [diagnostic.severity.HINT] = "",
+        [diagnostic.severity.ERROR] = "● ",
+        [diagnostic.severity.WARN] = "▲ ",
+        [diagnostic.severity.INFO] = "■ ",
+        [diagnostic.severity.HINT] = "◆ ",
       },
     },
+  }
 
   api.nvim_create_autocmd("CursorHold", {
     buffer = bufnr,
