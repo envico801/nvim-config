@@ -80,7 +80,7 @@ require("bufferline").setup {
     },
     close_button_visible = {
       -- fg = 'red',
-      bg = '#32302f' -- Background for close button
+      bg = '#504945' -- Background for close button
     },
     close_button_selected = {
       -- fg = 'red',
@@ -290,10 +290,10 @@ require("bufferline").setup {
       fg = '#282828',
       bg = '#282828' -- This sets the background of the entire bufferline bar
     },
-    -- indicator_visible = {
-    --   fg = 'red',
-    --   bg = 'red',
-    -- },
+    indicator_visible = {
+      -- fg = 'red',
+      bg = '#504945', -- Background color for selected buffer
+    },
     indicator_selected = {
       fg = '#b8bb26',
       bg = '#504945', -- Background color for selected buffer
