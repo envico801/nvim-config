@@ -33,7 +33,7 @@ function M.custom_attach(client, bufnr)
   map("n", "K", function()
     vim.lsp.buf.hover { border = "single", max_height = 25 }
   end)
-  map("n", "<C-k>", vim.lsp.buf.signature_help)
+  map("n", "<C-o>", vim.lsp.buf.signature_help)
   map("n", "<space>rn", vim.lsp.buf.rename, { desc = "varialbe rename" })
   map("n", "gr", vim.lsp.buf.references, { desc = "show references" })
   map("n", "[d", function()
