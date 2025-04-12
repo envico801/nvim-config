@@ -89,5 +89,4 @@ M.rand_colorscheme = function()
   end
 end
 
--- Load a random colorscheme
-M.rand_colorscheme()
+return M

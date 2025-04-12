@@ -6,18 +6,6 @@ local diagnostic = vim.diagnostic
 -- local utils = require("utils")
 local M = {}
 
--- set quickfix list from diagnostics in a certain buffer, not the whole workspace
-local set_qflist = function(buf_num, severity)
-  local diagnostics = nil
-  diagnostics = diagnostic.get(buf_num, { severity = severity })
-
-  local qf_items = diagnostic.toqflist(diagnostics)
-  vim.fn.setqflist({}, " ", { title = "Diagnostics", items = qf_items })
-
-  -- open quickfix by default
-  vim.cmd([[copen]])
-end
-
 -- Custom attach function for LSP
 function M.custom_attach(client, bufnr)
   -- Mappings.
@@ -31,23 +19,10 @@ function M.custom_attach(client, bufnr)
   map("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
   map("n", "<C-]>", vim.lsp.buf.definition)
   map("n", "K", function()
-    vim.lsp.buf.hover { border = "single", max_height = 25 }
+    vim.lsp.buf.hover { border = "single", max_height = 25, max_width = 120 }
   end)
   map("n", "<C-o>", vim.lsp.buf.signature_help)
   map("n", "<space>rn", vim.lsp.buf.rename, { desc = "varialbe rename" })
-  map("n", "gr", vim.lsp.buf.references, { desc = "show references" })
-  map("n", "[d", function()
-    diagnostic.jump { count = -1 }
-  end, { desc = "previous diagnostic" })
-  map("n", "]d", function()
-    diagnostic.jump { count = 1 }
-  end, { desc = "next diagnostic" })
-  -- this puts diagnostics from opened files to quickfix
-  map("n", "<space>qw", diagnostic.setqflist, { desc = "put window diagnostics to qf" })
-  -- this puts diagnostics from current buffer to quickfix
-  map("n", "<space>qb", function()
-    set_qflist(bufnr)
-  end, { desc = "put buffer diagnostics to qf" })
   map("n", "<space>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
   map("n", "<space>wa", vim.lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
   map("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
@@ -63,28 +38,6 @@ function M.custom_attach(client, bufnr)
   -- Uncomment code below to enable inlay hint from language server, some LSP server supports inlay hint,
   -- but disable this feature by default, so you may need to enable inlay hint in the LSP server config.
   vim.lsp.inlay_hint.enable(true, { buffer = bufnr })
-
-  -- global config for diagnostic
-  diagnostic.config {
-    underline = false,
-    virtual_text = false,
-    virtual_lines = false,
-    signs = {
-      text = {
-        [diagnostic.severity.ERROR] = "●",
-        [diagnostic.severity.WARN] = "▲",
-        [diagnostic.severity.INFO] = "■",
-        [diagnostic.severity.HINT] = "◆",
-      },
-    },
-    severity_sort = true,
-    float = {
-      source = true,
-      header = "Diagnostics:",
-      prefix = " ",
-      border = "single",
-    },
-  }
 
   api.nvim_create_autocmd("CursorHold", {
     pattern = "*",
@@ -108,12 +61,6 @@ function M.custom_attach(client, bufnr)
 
   -- The blow command will highlight the current variable and its usages in the buffer.
   if client.server_capabilities.documentHighlightProvider then
-    vim.cmd([[
-      hi! link LspReferenceRead Visual
-      hi! link LspReferenceText Visual
-      hi! link LspReferenceWrite Visual
-    ]])
-
     local gid = api.nvim_create_augroup("lsp_document_highlight", { clear = true })
     api.nvim_create_autocmd("CursorHold", {
       group = gid,
