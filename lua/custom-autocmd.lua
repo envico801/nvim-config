@@ -175,7 +175,8 @@ api.nvim_create_autocmd("ColorScheme", {
 
     local hl = vim.api.nvim_get_hl(0, { name = "NormalFloat" })
     -- change the background color of floating window to None, so it blenders better
-    vim.api.nvim_set_hl(0, "NormalFloat", { fg = hl.fg, bg = "None" })
+    -- vim.api.nvim_set_hl(0, "NormalFloat", { fg = hl.fg, bg = "None" })
+    vim.api.nvim_set_hl(0, "NormalFloat", { fg = hl.fg, bg = "#282828" })  -- Dark gruvbox background
 
     -- highlight for matching parentheses
     vim.api.nvim_set_hl(0, "MatchParen", { bold = true, underline = true })
