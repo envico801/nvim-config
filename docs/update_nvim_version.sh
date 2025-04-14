@@ -10,9 +10,9 @@ USE_BASH_SHELL=false
 #                                Nvim install                           #
 #######################################################################
 NVIM_DIR=$HOME/tools/nvim
-NVIM_SRC_NAME=$HOME/packages/nvim-linux64.tar.gz
+NVIM_SRC_NAME=$HOME/packages/nvim-linux-x86_64.tar.gz
 NVIM_CONFIG_DIR=$HOME/.config/nvim
-NVIM_LINK="https://github.com/neovim/neovim/releases/download/v0.10.4/nvim-linux-x86_64.tar.gz"
+NVIM_LINK="https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-x86_64.tar.gz"
 
 echo "This script will update Neovim to version 0.10.3"
 echo "Your configuration in $NVIM_CONFIG_DIR will NOT be touched"
